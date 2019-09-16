@@ -3,16 +3,15 @@ const Note = require('../models/note.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.body);
-    console.log(req.params);
+
     if(!req.body.delta) {
         return res.status(400).send({
             message: "Note delta can not be empty"
         });
     }
-    Note.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
-      console.log( post );
-    });
+    // Note.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {
+    //   console.log( post );
+    // });
     // Create a Note
     const note = new Note({
         delta: req.body.delta
@@ -66,7 +65,7 @@ exports.findOne = (req, res) => {
 // Update a note identified by the noteId in the request
 exports.update = (req, res) => {
     // Validate Request
-    if(!req.body.content) {
+    if(!req.body.delta) {
         return res.status(400).send({
             message: "Note content can not be empty"
         });
@@ -74,8 +73,7 @@ exports.update = (req, res) => {
 
     // Find note and update it with the request body
     Note.findByIdAndUpdate(req.params.noteId, {
-        title: req.body.title || "Untitled Note",
-        content: req.body.content
+        delta: req.body.delta
     }, {new: true})
     .then(note => {
         if(!note) {
