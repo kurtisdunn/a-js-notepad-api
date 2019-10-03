@@ -3,8 +3,9 @@ const Note = require('../models/note.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
     // Validate request
+    console.log(req.body);
+    if(!req.body) {
 
-    if(!req.body.delta) {
         return res.status(400).send({
             message: "Note delta can not be empty"
         });
