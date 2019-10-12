@@ -3,7 +3,6 @@ const Note = require('../models/note.model.js');
 // Create and Save a new Note
 exports.create = (req, res) => {
     // Validate request
-    console.log(req.body);
     if(!req.body) {
 
         return res.status(400).send({
@@ -31,7 +30,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res) => {
-    Note.find()
+    Note.find().sort({updatedAt: 'desc'})
     .then(notes => {
         res.send(notes);
     }).catch(err => {
@@ -62,6 +61,32 @@ exports.findOne = (req, res) => {
         });
     });
 };
+
+exports.findLike = (req, res) => {
+  console.log(req.params.searchString)
+
+    Note.find({ 'delta.ops.insert': new RegExp(req.params.searchString, "i")}).limit(5)
+    .then(note => {
+        if(!note) {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.searchString
+            });
+        }
+        res.send(note);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Note not found with id " + req.params.searchString
+            });
+        }
+        return res.status(500).send({
+            message: "Error retrieving note with id " + req.params.searchString
+        });
+    });
+};
+// UserSchema.find({name: { $regex: '.*' + name + '.*' } }).limit(5);
+
+
 
 // Update a note identified by the noteId in the request
 exports.update = (req, res) => {
@@ -97,7 +122,8 @@ exports.update = (req, res) => {
 
 // Delete a note with the specified noteId in the request
 exports.delete = (req, res) => {
-    Note.findByIdAndRemove(req.params.noteId)
+
+    Note.remove({_id: req.params.noteId})
     .then(note => {
         if(!note) {
             return res.status(404).send({
