@@ -63,7 +63,6 @@ exports.findOne = (req, res) => {
 };
 
 exports.findLike = (req, res) => {
-  console.log(req.params.searchString)
 
     Note.find({ 'delta.ops.insert': new RegExp(req.params.searchString, "i")}).limit(5)
     .then(note => {
@@ -84,7 +83,6 @@ exports.findLike = (req, res) => {
         });
     });
 };
-// UserSchema.find({name: { $regex: '.*' + name + '.*' } }).limit(5);
 
 
 
