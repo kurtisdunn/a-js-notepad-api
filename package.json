@@ -16,8 +16,15 @@
   "author": "Kurtis Dunn",
   "license": "none",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "express": "^4.16.3",
-    "mongoose": "^5.2.8"
+   "bcryptjs": "*",
+   "body-parser": "~1.15.2",
+   "cancan": "^3.1.0",
+   "body-parser": "^1.18.3",
+   "cookie-parser": "~1.4.3",
+   "express": "^4.16.3",
+   "express-session": "~1.14.1",
+   "mongoose": "^5.2.8",
+   "passport": "~0.3.2",
+   "passport-local": "~1.0.0"
   }
 }

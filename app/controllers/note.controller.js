@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
 
 exports.findLike = (req, res) => {
 
-    Note.find({ 'delta.ops.insert': new RegExp(req.params.searchString, "i")}).limit(5)
+    Note.find({ 'delta.ops.insert': new RegExp(req.params.searchString, "i")})
     .then(note => {
         if(!note) {
             return res.status(404).send({
