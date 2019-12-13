@@ -20,6 +20,8 @@ const httpsServer = https.createServer(credentials, app);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.url, {
+	"user": "kdunn",
+	"pass": "80677",
 	useNewUrlParser: true
 }).then(() => {
     console.log("Successfully connected to the database");
